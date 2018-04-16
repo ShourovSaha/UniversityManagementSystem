@@ -57,6 +57,22 @@ namespace ABCUniversity.Controllers
                 db.Enrollments.Add(enrollment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
+
+                //var dataCheck = db.Enrollments.Where(e => e.StudentID == enrollment.StudentID && e.CourseID == enrollment.CourseID );
+
+                //if (dataCheck == null)
+                //{
+                //    db.Enrollments.Add(enrollment);
+                //    db.SaveChanges();
+                //    return RedirectToAction("Index");
+
+                //}
+                //else
+                //{
+                //    ViewBag.flag = 1;
+                //    return RedirectToAction("Index");
+                //}
+
             }
 
             ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "Title", enrollment.CourseID);

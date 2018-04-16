@@ -46,7 +46,7 @@ namespace ABCUniversity.Migrations
             students.ForEach(s => context.Students.AddOrUpdate(s));
             context.SaveChanges();
 
-            List<Course> courses = new List<Course>()
+            List<Course> courses = new List<Course>()  
             {
                 new Course {CourseID = 1002, Title = "Calculus", Credits = 3 },
                 new Course{CourseID=1050,Title="Chemistry",Credits=3,},

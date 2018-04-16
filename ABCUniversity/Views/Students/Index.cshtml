@@ -9,16 +9,29 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Search student by name: @Html.TextBox("SearchStr")
+        <input type="submit" value="Search"/>
+    </p>
+}
+
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.SortLastName })
+            @*@Html.DisplayNameFor(model => model.LastName)*@
         </th>
         <th>
+        
             @Html.DisplayNameFor(model => model.FirstMidName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EnrollmentDate)
+            @Html.ActionLink("Enrollment Date", "Index", new { sortOrder = ViewBag.SortEnrollmentDate})
+            @*@Html.DisplayNameFor(model => model.EnrollmentDate)*@
         </th>
         <th></th>
     </tr>
@@ -34,6 +47,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.EnrollmentDate)
         </td>
+        
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
