@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Students</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -25,9 +25,9 @@
             @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.SortLastName })
             @*@Html.DisplayNameFor(model => model.LastName)*@
         </th>
-        <th>
-        
-            @Html.DisplayNameFor(model => model.FirstMidName)
+        <th style="color:#0094ff">
+            First Name
+            @*@Html.DisplayNameFor(model => model.FirstMidName)*@
         </th>
         <th>
             @Html.ActionLink("Enrollment Date", "Index", new { sortOrder = ViewBag.SortEnrollmentDate})

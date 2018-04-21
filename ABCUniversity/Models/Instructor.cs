@@ -7,9 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ABCUniversity.Models
 {
-    public class Student
+    public class Instructor
     {
-        public int ID { get; set; }
+        public int InstructorID { get; set; }
         [StringLength(10, MinimumLength = 1, ErrorMessage = "First name must be with in 10 words.")]
         public string LastName { get; set; }
 
@@ -18,8 +18,8 @@ namespace ABCUniversity.Models
         public string FirstMidName { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime EnrollmentDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true), Display(Name = "Hire Date")]
+        public DateTime HireDate { get; set; }
 
         [Display(Name = "Full Name")]
         public string FullName
@@ -29,6 +29,9 @@ namespace ABCUniversity.Models
                 return this.FirstMidName + " " + this.LastName;
             }
         }
-        public virtual ICollection<Enrollment> Enrollments { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
+        public virtual OfficeAssignment OfficeAssignment { get; set; }
+
+        public virtual Department Department { get; set; }
     }
 }

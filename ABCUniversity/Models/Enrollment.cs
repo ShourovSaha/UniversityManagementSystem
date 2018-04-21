@@ -14,7 +14,7 @@ namespace ABCUniversity.Models
         public int EnrollmentID { get; set; }
         public int StudentID { get; set; }
         public int CourseID { get; set; }
-        public Grade ? Grade { get; set; }
+        public Grade? Grade { get; set; }
 
         public virtual Student Students { get; set; }
         public virtual Course Courses { get; set; }

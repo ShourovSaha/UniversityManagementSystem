@@ -6,6 +6,7 @@ namespace ABCUniversity.Migrations
     using System.Linq;
     using System.Collections.Generic;
     using ABCUniversity.Models;
+    using ABCUniversity.DAL;
 
 
     internal sealed class Configuration : DbMigrationsConfiguration<ABCUniversity.DAL.VarsityContext>
@@ -14,6 +15,8 @@ namespace ABCUniversity.Migrations
         {
             AutomaticMigrationsEnabled = false;
         }
+
+        //private VarsityContext db = new VarsityContext();
 
         protected override void Seed(ABCUniversity.DAL.VarsityContext context)
         {
@@ -43,7 +46,7 @@ namespace ABCUniversity.Migrations
                 new Student{FirstMidName="Nino",LastName="Olivetto",EnrollmentDate=DateTime.Parse("2005-09-01")}
             };
 
-            students.ForEach(s => context.Students.AddOrUpdate(s));
+            students.ForEach(s => context.Students.AddOrUpdate(p => p.LastName, s));
             context.SaveChanges();
 
             List<Course> courses = new List<Course>()  
@@ -57,7 +60,7 @@ namespace ABCUniversity.Migrations
                 new Course{CourseID=2021,Title="Composition",Credits=3,},
                 new Course{CourseID=2042,Title="Literature",Credits=4,}
             };
-            courses.ForEach(c => context.Courses.AddOrUpdate(c));
+            courses.ForEach(c => context.Courses.AddOrUpdate(p => p.CourseID, c));
             context.SaveChanges();
 
             List<Enrollment> enrollments = new List<Enrollment>()
@@ -75,8 +78,22 @@ namespace ABCUniversity.Migrations
                 new Enrollment{StudentID=5,CourseID=4041,Grade=Grade.C},
                 new Enrollment{StudentID=6,CourseID=1045},
                 new Enrollment{StudentID=7,CourseID=3141,Grade=Grade.A},
+                new Enrollment {StudentID = students.Single(s => s.LastName == "Arturo").ID,
+                                CourseID = courses.Single(c => c.Title == "Calculus").CourseID,
+                                Grade = Grade.C}
             };
-            enrollments.ForEach(e => context.Enrollments.AddOrUpdate(e));
+            //enrollments.ForEach(e => context.Enrollments.AddOrUpdate(e));
+            
+
+            foreach (Enrollment data in enrollments)
+            {
+                var studentEnrollmentsInDatabase = context.Enrollments.Where(s => s.StudentID == data.StudentID
+                                                                && s.CourseID == data.CourseID).SingleOrDefault();
+                if (studentEnrollmentsInDatabase == null)
+                {
+                    context.Enrollments.Add(data);
+                }
+            }
             context.SaveChanges();
         }
     }
