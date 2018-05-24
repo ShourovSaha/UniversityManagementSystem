@@ -128,9 +128,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CourseInstructorsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\Departments1Controller.cs" />
+    <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\EnrollmentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InstructorsController.cs" />
+    <Compile Include="Controllers\OfficeAssignmentsController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="DAL\VarsityContext.cs" />
     <Compile Include="DAL\VarsityInitializer.cs" />
@@ -149,14 +154,61 @@
     <Compile Include="Migrations\201804181229521_ColumnFirstName.Designer.cs">
       <DependentUpon>201804181229521_ColumnFirstName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804301909578_ComplexDataModels.cs" />
+    <Compile Include="Migrations\201804301909578_ComplexDataModels.Designer.cs">
+      <DependentUpon>201804301909578_ComplexDataModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804302014209_RecorrectCourseInstrautorRelationship.cs" />
+    <Compile Include="Migrations\201804302014209_RecorrectCourseInstrautorRelationship.Designer.cs">
+      <DependentUpon>201804302014209_RecorrectCourseInstrautorRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805021706438_RemoveCourseIDAutoIdentityOption.cs" />
+    <Compile Include="Migrations\201805021706438_RemoveCourseIDAutoIdentityOption.Designer.cs">
+      <DependentUpon>201805021706438_RemoveCourseIDAutoIdentityOption.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805021724571_EditedInstructorClass.cs" />
+    <Compile Include="Migrations\201805021724571_EditedInstructorClass.Designer.cs">
+      <DependentUpon>201805021724571_EditedInstructorClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805021810260_AddedCourseAssignproperty.cs" />
+    <Compile Include="Migrations\201805021810260_AddedCourseAssignproperty.Designer.cs">
+      <DependentUpon>201805021810260_AddedCourseAssignproperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805030806296_RenameInstructorID.cs" />
+    <Compile Include="Migrations\201805030806296_RenameInstructorID.Designer.cs">
+      <DependentUpon>201805030806296_RenameInstructorID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805031243364_makeDeptIDNullable.cs" />
+    <Compile Include="Migrations\201805031243364_makeDeptIDNullable.Designer.cs">
+      <DependentUpon>201805031243364_makeDeptIDNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805100758051_DepartmentSP.cs" />
+    <Compile Include="Migrations\201805100758051_DepartmentSP.Designer.cs">
+      <DependentUpon>201805100758051_DepartmentSP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805101815403_CourseEdited.cs" />
+    <Compile Include="Migrations\201805101815403_CourseEdited.Designer.cs">
+      <DependentUpon>201805101815403_CourseEdited.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805141941545_RowVersion.cs" />
+    <Compile Include="Migrations\201805141941545_RowVersion.Designer.cs">
+      <DependentUpon>201805141941545_RowVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805161933323_RecorrectedEntityes.cs" />
+    <Compile Include="Migrations\201805161933323_RecorrectedEntityes.Designer.cs">
+      <DependentUpon>201805161933323_RecorrectedEntityes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\CourseInstructor.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Enrollment.cs" />
     <Compile Include="Models\Instructor.cs" />
     <Compile Include="Models\OfficeAssignment.cs" />
+    <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\InstructorIndexData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -208,6 +260,31 @@
     <Content Include="Views\Enrollments\Details.cshtml" />
     <Content Include="Views\Enrollments\Edit.cshtml" />
     <Content Include="Views\Enrollments\Index.cshtml" />
+    <Content Include="Views\Departments\Create.cshtml" />
+    <Content Include="Views\Departments\Delete.cshtml" />
+    <Content Include="Views\Departments\Details.cshtml" />
+    <Content Include="Views\Departments\Edit.cshtml" />
+    <Content Include="Views\Departments\Index.cshtml" />
+    <Content Include="Views\Instructors\Create.cshtml" />
+    <Content Include="Views\Instructors\Delete.cshtml" />
+    <Content Include="Views\Instructors\Details.cshtml" />
+    <Content Include="Views\Instructors\Edit.cshtml" />
+    <Content Include="Views\Instructors\Index.cshtml" />
+    <Content Include="Views\OfficeAssignments\Create.cshtml" />
+    <Content Include="Views\OfficeAssignments\Delete.cshtml" />
+    <Content Include="Views\OfficeAssignments\Details.cshtml" />
+    <Content Include="Views\OfficeAssignments\Edit.cshtml" />
+    <Content Include="Views\OfficeAssignments\Index.cshtml" />
+    <Content Include="Views\CourseInstructors\Create.cshtml" />
+    <Content Include="Views\CourseInstructors\Delete.cshtml" />
+    <Content Include="Views\CourseInstructors\Details.cshtml" />
+    <Content Include="Views\CourseInstructors\Edit.cshtml" />
+    <Content Include="Views\CourseInstructors\Index.cshtml" />
+    <Content Include="Views\Departments1\Create.cshtml" />
+    <Content Include="Views\Departments1\Delete.cshtml" />
+    <Content Include="Views\Departments1\Details.cshtml" />
+    <Content Include="Views\Departments1\Edit.cshtml" />
+    <Content Include="Views\Departments1\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -229,6 +306,39 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804181229521_ColumnFirstName.resx">
       <DependentUpon>201804181229521_ColumnFirstName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804301909578_ComplexDataModels.resx">
+      <DependentUpon>201804301909578_ComplexDataModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804302014209_RecorrectCourseInstrautorRelationship.resx">
+      <DependentUpon>201804302014209_RecorrectCourseInstrautorRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805021706438_RemoveCourseIDAutoIdentityOption.resx">
+      <DependentUpon>201805021706438_RemoveCourseIDAutoIdentityOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805021724571_EditedInstructorClass.resx">
+      <DependentUpon>201805021724571_EditedInstructorClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805021810260_AddedCourseAssignproperty.resx">
+      <DependentUpon>201805021810260_AddedCourseAssignproperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805030806296_RenameInstructorID.resx">
+      <DependentUpon>201805030806296_RenameInstructorID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805031243364_makeDeptIDNullable.resx">
+      <DependentUpon>201805031243364_makeDeptIDNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805100758051_DepartmentSP.resx">
+      <DependentUpon>201805100758051_DepartmentSP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805101815403_CourseEdited.resx">
+      <DependentUpon>201805101815403_CourseEdited.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805141941545_RowVersion.resx">
+      <DependentUpon>201805141941545_RowVersion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805161933323_RecorrectedEntityes.resx">
+      <DependentUpon>201805161933323_RecorrectedEntityes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

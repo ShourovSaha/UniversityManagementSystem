@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -18,7 +19,7 @@ namespace ABCUniversity.Controllers
         // GET: Courses
         public ActionResult Index()
         {
-            return View(db.Courses.ToList());
+            return View(db.Courses.Include(c => c.Department).ToList());
         }
 
         // GET: Courses/Details/5
@@ -39,6 +40,7 @@ namespace ABCUniversity.Controllers
         // GET: Courses/Create
         public ActionResult Create()
         {
+            ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "DepartmentName");
             return View();
         }
 
@@ -47,16 +49,28 @@ namespace ABCUniversity.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CourseID,Title,Credits")] Course course)
+        public ActionResult Create([Bind(Include = "CourseID,Title,Credits,DepartmentID")] Course course)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Courses.Add(course);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Courses.Add(course);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (RetryLimitExceededException ex)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again ! If the problem persists then contact to your administrator.");
             }
 
-            return View(course);
+            var listOfDepartments = from d in db.Departments
+                                    orderby d.DepartmentName
+                                    select d;
+
+            ViewBag.DepartmentID = new SelectList(listOfDepartments, "DepartmentID", "DepartmentName", course.Department.DepartmentID);
+            return View();
         }
 
         // GET: Courses/Edit/5
@@ -71,6 +85,9 @@ namespace ABCUniversity.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "DepartmentName", course.DepartmentID);
+
             return View(course);
         }
 
@@ -87,6 +104,9 @@ namespace ABCUniversity.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "DepartmentName", course.DepartmentID);
+
             return View(course);
         }
 

@@ -30,10 +30,10 @@ namespace ABCUniversity.Controllers
             switch (sortOrder)
             {
                 case "date":
-                    students = students.OrderBy(s => s.EnrollmentDate);
+                    //students = students.OrderBy(s => s.EnrollmentDate);
                     break;
                 case "date_desc":
-                    students = students.OrderByDescending(s => s.EnrollmentDate);
+                    //students = students.OrderByDescending(s => s.EnrollmentDate);
                     break;
                 case "lastName_desc":
                     students = students.OrderByDescending(s => s.LastName);
@@ -163,7 +163,7 @@ namespace ABCUniversity.Controllers
                 //Student studentObj = db.Students.Find(id);
                 //db.Students.Remove(studentObj);
 
-                Student studentToDelete = new Student { ID = (int)id };
+                Student studentToDelete = new Student { StudentID = (int)id };
                 db.Entry(studentToDelete).State = EntityState.Deleted;
                 db.SaveChanges();
             }

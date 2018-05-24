@@ -14,6 +14,7 @@ namespace ABCUniversity.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            
         }
 
         //private VarsityContext db = new VarsityContext();
@@ -47,44 +48,119 @@ namespace ABCUniversity.Migrations
             };
 
             students.ForEach(s => context.Students.AddOrUpdate(p => p.LastName, s));
+            //context.SaveChanges();
+
+            List<Instructor> instructors = new List<Instructor>
+            {
+                new Instructor { FirstMidName = "Kim", LastName = "Abercrombie",
+                    HireDate = DateTime.Parse("1995-03-11") },
+                new Instructor { FirstMidName = "Fadi", LastName ="Fakhouri",
+                    HireDate = DateTime.Parse("2002-07-06") },
+                new Instructor { FirstMidName = "Roger", LastName = "Harui",
+                    HireDate = DateTime.Parse("1998-07-01") },
+                new Instructor { FirstMidName = "Candace", LastName ="Kapoor",
+                    HireDate = DateTime.Parse("2001-01-15") },
+                new Instructor { FirstMidName = "Roger", LastName ="Zheng",
+                    HireDate = DateTime.Parse("2004-02-12") }
+            };
+
+            instructors.ForEach(s => context.Instructors.AddOrUpdate(p => p.LastName, s));
             context.SaveChanges();
 
-            List<Course> courses = new List<Course>()  
+            var departments = new List<Department>()
             {
-                new Course {CourseID = 1002, Title = "Calculus", Credits = 3 },
-                new Course{CourseID=1050,Title="Chemistry",Credits=3,},
-                new Course{CourseID=4022,Title="Microeconomics",Credits=3,},
-                new Course{CourseID=4041,Title="Macroeconomics",Credits=3,},
-                new Course{CourseID=1045,Title="Calculus",Credits=4,},
-                new Course{CourseID=3141,Title="Trigonometry",Credits=4,},
-                new Course{CourseID=2021,Title="Composition",Credits=3,},
-                new Course{CourseID=2042,Title="Literature",Credits=4,}
+                new Department {/*DepartmentID = 1001,*/ DepartmentName = "Computer Science and Engineerng", Budget = 1000000, StartDate = DateTime.Parse("01-01-2000"),
+                    InstructorID = instructors.Single(i => i.LastName == "Fakhouri").InstructorID},
+                new Department {/*DepartmentID = 1002,*/ DepartmentName = "Mathematics", Budget = 100000, StartDate = DateTime.Parse("2007-09-01"),
+                    InstructorID = instructors.Single( i => i.LastName == "Fakhouri").InstructorID },
+                new Department {/*DepartmentID = 1003,*/ DepartmentName = "Electric & Electronic Engineering", Budget = 350000, StartDate = DateTime.Parse("2007-09-01"),
+                    InstructorID = instructors.Single( i => i.LastName =="Harui").InstructorID },
+                new Department {/*DepartmentID = 1004,*/ DepartmentName = "Economics", Budget = 100000,StartDate = DateTime.Parse("2007-09-01"),
+                    InstructorID = instructors.Single( i => i.LastName =="Kapoor").InstructorID }
+            };
+
+            departments.ForEach(d => context.Departments.AddOrUpdate(i=> i.DepartmentID, d));
+            context.SaveChanges();
+
+            List<Course> courses = new List<Course>()
+            {
+                new Course {CourseID = 101, Title = "Calculus", Credits = 3,
+                DepartmentID = departments.Single(d => d.DepartmentName == "Mathematics").DepartmentID,
+                //CourseInstructors = new List<Instructor>()
+                },
+                new Course{CourseID=102,Title="Chemistry",Credits=3,
+                    DepartmentID = departments.Single(d => d.DepartmentName == "Electric & Electronic Engineering").DepartmentID,
+                    //CourseInstructors = new List<Instructor>()
+                },
+                
+                new Course {CourseID = 201, Title = "Microeconomics", Credits = 3,
+                    DepartmentID = departments.Single( s => s.DepartmentName == "Economics").DepartmentID,
+                    //CourseInstructors = new List<Instructor>()
+                },
+                
+                new Course {CourseID = 203, Title = "Calculus", Credits = 4,
+                    DepartmentID = departments.Single( s => s.DepartmentName == "Mathematics").DepartmentID,
+                    //CourseInstructors = new List<Instructor>()
+                },
+                new Course {CourseID = 301, Title = "Trigonometry",Credits = 4,
+                    DepartmentID = departments.Single( s => s.DepartmentName == "Mathematics").DepartmentID,
+                    //CourseInstructors = new List<Instructor>()
+                },
+                new Course {CourseID = 302, Title = "Composition", Credits = 3,
+                DepartmentID = departments.Single( s => s.DepartmentName == "English").DepartmentID,
+                //CourseInstructors = new List<Instructor>()
+                }
+                //new Course{CourseID="MiCR201",Title="Microeconomics",Credits=3,},
+                //new Course{CourseID="MACR202",Title="Macroeconomics",Credits=3,},
+                //new Course{CourseID="CAL203",Title="Calculus",Credits=4,},
+                //new Course{CourseID="TRIG301",Title="Trigonometry",Credits=4,},
+                //new Course{CourseID="COMP302",Title="Composition",Credits=3,},
+                //new Course{CourseID="LIT104",Title="Literature",Credits=4,}
             };
             courses.ForEach(c => context.Courses.AddOrUpdate(p => p.CourseID, c));
             context.SaveChanges();
 
+
+            var courseInstructors =new  List< CourseInstructor >()
+            {
+                new CourseInstructor { InstructorID = instructors.Single(i => i.LastName == "Abercrombie").InstructorID,
+                                       CourseID = courses.Single(c => c.CourseID == 101).CourseID
+                },
+
+
+            };
+
             List<Enrollment> enrollments = new List<Enrollment>()
             {
-                new Enrollment { StudentID = 1, CourseID = 2021, Grade = Grade.B },
-                new Enrollment{StudentID=1,CourseID=1050,Grade=Grade.A},
-                new Enrollment{StudentID=1,CourseID=4022,Grade=Grade.C},
-                new Enrollment{StudentID=1,CourseID=4041,Grade=Grade.B},
-                new Enrollment{StudentID=2,CourseID=1045,Grade=Grade.B},
-                new Enrollment{StudentID=2,CourseID=3141,Grade=Grade.F},
-                new Enrollment{StudentID=2,CourseID=2021,Grade=Grade.F},
-                new Enrollment{StudentID=3,CourseID=1050},
-                new Enrollment{StudentID=4,CourseID=1050,},
-                new Enrollment{StudentID=4,CourseID=4022,Grade=Grade.F},
-                new Enrollment{StudentID=5,CourseID=4041,Grade=Grade.C},
-                new Enrollment{StudentID=6,CourseID=1045},
-                new Enrollment{StudentID=7,CourseID=3141,Grade=Grade.A},
-                new Enrollment {StudentID = students.Single(s => s.LastName == "Arturo").ID,
-                                CourseID = courses.Single(c => c.Title == "Calculus").CourseID,
-                                Grade = Grade.C}
+                //new Enrollment { StudentID = 1, CourseID = "CHE102", Grade = Grade.B },
+                //new Enrollment{StudentID=1,CourseID="CAL101",Grade=Grade.A},
+                //new Enrollment{StudentID=1,CourseID="MACR202",Grade=Grade.C},
+                //new Enrollment{StudentID=1,CourseID="CAL203",Grade=Grade.B},
+                //new Enrollment{StudentID=2,CourseID="TRIG301",Grade=Grade.B},
+                //new Enrollment{StudentID=2,CourseID="LIT104",Grade=Grade.F},
+                //new Enrollment{StudentID=2,CourseID="MiCR201",Grade=Grade.F},
+                //new Enrollment{StudentID=3,CourseID="CAL203"},
+                //new Enrollment{StudentID=4,CourseID="CHE102"},
+                //new Enrollment{StudentID=4,CourseID="LIT104",Grade=Grade.F},
+                //new Enrollment{StudentID=5,CourseID="TRIG301",Grade=Grade.C},
+                //new Enrollment{StudentID=6,CourseID="CHE102"},
+                //new Enrollment{StudentID=7,CourseID="CAL101",Grade=Grade.A},
+                new Enrollment {StudentID = students.Single(s => s.LastName == "Arturo").StudentID,
+                                CourseID = courses.Single(c => c.CourseID == 301).CourseID,
+                                Grade = Grade.C},
+                new Enrollment {StudentID = students.Single(s => s.LastName == "Alexander").StudentID,
+                                CourseID = courses.Single(c => c.CourseID == 201 ).CourseID,
+                                Grade = Grade.B },
+                new Enrollment {
+                                StudentID = students.Single(s => s.LastName == "Alonso").StudentID,
+                                CourseID = courses.Single(c => c.CourseID == 101).CourseID,
+                                Grade = Grade.B },
+                new Enrollment {
+                                StudentID = students.Single(s => s.LastName == "Alonso").StudentID,
+                                CourseID = courses.Single(c => c.CourseID == 301 ).CourseID,
+                                Grade = Grade.B },
             };
             //enrollments.ForEach(e => context.Enrollments.AddOrUpdate(e));
-            
-
             foreach (Enrollment data in enrollments)
             {
                 var studentEnrollmentsInDatabase = context.Enrollments.Where(s => s.StudentID == data.StudentID
@@ -95,6 +171,18 @@ namespace ABCUniversity.Migrations
                 }
             }
             context.SaveChanges();
+
+            var officeAssignments = new List<OfficeAssignment>
+            {
+                new OfficeAssignment { InstructorID = instructors.Single( i => i.LastName == "Fakhouri").InstructorID, Location = "Smith 17" },
+                new OfficeAssignment { InstructorID = instructors.Single( i => i.LastName == "Harui").InstructorID, Location = "Gowan 27" },
+                new OfficeAssignment { InstructorID = instructors.Single( i => i.LastName == "Kapoor").InstructorID, Location = "Thompson 304" },
+            };
+            officeAssignments.ForEach(s =>
+            context.OfficeAssignments.AddOrUpdate(p => p.InstructorID, s));
+            context.SaveChanges();
+
+           
         }
     }
 }

@@ -10,18 +10,21 @@ namespace ABCUniversity.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "Course ID")]
-        public string CourseID { get; set; }
+        public int CourseID { get; set; }
 
-        [Display(Name = "Course Title"), StringLength(20, MinimumLength = 2) ]
+        [Required]
+        [Display(Name = "Course Title"), StringLength(50, MinimumLength = 2) ]
         public string Title { get; set; }
 
+        [Required]
         [Range(1, 6)]
         public int Credits { get; set; }
-        public int DepartmentID { get; set; }
+        public int? DepartmentID { get; set; }
 
-        public virtual ICollection<Instructor> Instructors { get; set; }
-        public virtual ICollection<Enrollment> Enrollments { get; set; }
         public virtual Department Department { get; set; }
+        public virtual ICollection<CourseInstructor> CourseInstructors { get; set; }
+        public virtual ICollection<Enrollment> Enrollments { get; set; }
+        
 
 
     }

@@ -1,0 +1,151 @@
+﻿@*@model IEnumerable<ABCUniversity.Models.Instructor>*@
+
+@model ABCUniversity.ViewModels.InstructorIndexData
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Instructors</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Full Name
+            @*@Html.DisplayNameFor(model => model.Instructors)*@
+        </th>
+        <th>
+            HireDate
+            @*@Html.DisplayNameFor(model => model.HireDate)*@
+        </th>
+        <th>
+            Location
+            @*@Html.DisplayNameFor(model => model.OfficeAssignment.Location)*@
+        </th>
+        <th>
+            Courses
+            @*@Html.DisplayFor(model => model.CourseInstructors.)*@
+        </th>
+        <th></th>
+    </tr>
+    @*@foreach (var item in Model.CourseInstructors)
+        {
+            string SelectedRow = "";
+            if (ViewBag.InstructorID == item.Instructors.InstructorID)
+            {
+                SelectedRow = "success";
+            }
+            <tr class="@SelectedRow">
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Instructors.FirstMidName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Instructors.HireDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Instructors.OfficeAssignment.Location)
+                </td>
+                <td>
+                    @Html.ActionLink("Select", "Index", new { instructorsID = item.Instructors.InstructorID }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Instructors.InstructorID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Instructors.InstructorID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Instructors.InstructorID })
+                </td>
+            </tr>
+        }*@
+
+
+
+
+    @foreach (var item in Model.Instructors)
+    {
+        string SelectedRow = "";
+        if (ViewBag.InstructorID == item.InstructorID)
+        {
+            SelectedRow = "success";
+        }
+        <tr class="@SelectedRow">
+
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HireDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfficeAssignment.Location)
+            </td>
+
+            @*@{
+                    int count = 0;
+                }*@
+
+            <td>
+                @foreach (var item2 in item.CourseInstructors.Select(i => i.Courses))
+                {
+                    @item2.Title
+                    <br />                        
+                }
+            </td>
+
+            <td>
+                @Html.ActionLink("Select", "Index", new { instructorsID = item.InstructorID }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.InstructorID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.InstructorID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.InstructorID })
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+<hr />
+<br /><br />
+
+@if (Model.Instructors.Select(i => i.CourseInstructors.Select(ci => ci.Courses.CourseID)) != null)
+{
+    <h2>Course Taught By Selected Instructor</h2>
+
+    <table>
+        <tr>
+            <th>
+                Course ID
+                @*@Html.DisplayNameFor(model => model.CourseInstructors.Course)*@
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Department
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Instructors)
+        {//Error is here (html helper error)
+            string SelectedRow = "";
+            if (ViewBag.CourseID == item.CourseInstructors.Select(ci => ci.Courses.CourseID))
+            {
+                SelectedRow = "success";
+            }
+            @*<tr class="@SelectedRow">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseInstructors. Select(ci => ci.Courses.CourseID))
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseInstructors.Select(ci => ci.Courses.Title))
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseInstructors.Select(ci => ci.Courses.Department.DepartmentID))
+                    </td>
+                    <td>
+                        @Html.ActionLink("Select", "Index", new { courseID = item.CourseInstructors.Select(ci => ci.Courses.CourseID) })
+                    </td>
+                </tr>*@
+        }
+    </table>
+}

@@ -50,7 +50,7 @@ namespace ABCUniversity.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EnrollmentID,StudentID,CourseID,Grade")] Enrollment enrollment)
+        public ActionResult Create([Bind(Include = "EnrollmentID,ID,CourseID,Grade")] Enrollment enrollment)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +102,7 @@ namespace ABCUniversity.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EnrollmentID,StudentID,CourseID,Grade")] Enrollment enrollment)
+        public ActionResult Edit([Bind(Include = "EnrollmentID,ID,CourseID,Grade")] Enrollment enrollment)
         {
             if (ModelState.IsValid)
             {

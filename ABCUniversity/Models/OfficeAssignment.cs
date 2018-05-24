@@ -11,8 +11,10 @@ namespace ABCUniversity.Models
         [Key]
         [ForeignKey("Instructor")]
         public int InstructorID { get; set; }
+
         [Display(Name = "Office Location"), StringLength(20, MinimumLength = 3)]
         public string Location { get; set; }
+
         public virtual Instructor Instructor { get; set; }
     }
 }

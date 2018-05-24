@@ -9,9 +9,11 @@ namespace ABCUniversity.Models
 {
     public class Department
     {
+        
+        [Display(Name = "Department ID")]
         public int DepartmentID { get; set; }
 
-        [Display(Name = "Department Name"), StringLength(20, MinimumLength = 2)]
+        [Display(Name = "Department Name"), StringLength(50, MinimumLength = 2)]
         public string DepartmentName { get; set; }
 
         [DataType(DataType.Currency)]
@@ -22,7 +24,12 @@ namespace ABCUniversity.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true), Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
 
-        public virtual ICollection<Instructor> Instructors { get; set; }
+        public int? InstructorID { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; } 
+
+        public virtual Instructor Administrator { get; set; }
         public virtual ICollection<Course> Courses { get; set; }
         public virtual ICollection<Student> Students { get; set; }
 
